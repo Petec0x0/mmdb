@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, Text, SafeAreaView  } from 'react-native';
+import { StyleSheet, Text  } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import AllHomeScreen from './AllHomeScreen';
 import MoviesScreen from './MoviesScreen';
@@ -11,29 +12,24 @@ const Tab = createMaterialTopTabNavigator();
 export default HomeScreen = () => {
     return (
         <Tab.Navigator
-            style={{backgroundColor: '#13012c' }}
+            style={{backgroundColor: '#13002c' }}
             screenOptions={({ route }) => ({
                 tabBarStyle: { 
-                    backgroundColor: '#13012c',
+                    backgroundColor: '#13002c',
                 },
                 tabBarIndicatorStyle: { 
-                    backgroundColor: 'transparent', 
+                    backgroundColor: 'transparent', //transparent
                 },
                 tabBarLabel: ({focused}) => {
-                    // define the style for the navbar item
-                    const style = {
-                        color: '#fff', 
-                        borderWidth: 1, 
-                        borderColor: '#fff',
-                        borderRadius: 50,
-                        paddingHorizontal: 14,
-                        paddingTop: 2,
-                        paddingBottom: 1,
-                        fontSize: 12,
-                        textAlign: 'center',
-                        backgroundColor: focused ? '#6b059e' : '#13012c'
-                    }
-                    return <Text style={style}>{route.name}</Text>;
+                    return (
+                        <LinearGradient
+                            // Button Linear Gradient
+                            colors={focused ? ['#c73361', '#6b059e']: ['#13012c', '#13012c']}
+                            end={{ x: 0.8, y: 0.2 }}
+                            style={styles.tabBarButton}
+                        >
+                            <Text style={styles.tabBarText}>{route.name}</Text>
+                        </LinearGradient>);
                 }
             })}
         >
@@ -45,13 +41,20 @@ export default HomeScreen = () => {
     )
 }
 
-
+// styles
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#13012c',
-      alignItems: 'center',
-      justifyContent: 'center',
+    tabBarText: {
+        color: '#fff', 
+        paddingHorizontal: 14,
+        paddingTop: 3,
+        paddingBottom: 3,
+        fontSize: 12,
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
-  });
-  
+    tabBarButton: {
+        borderRadius: 50,
+        borderWidth: 1, 
+        borderColor: '#fff'
+    }
+});

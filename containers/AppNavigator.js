@@ -29,7 +29,7 @@ export default AppNavigator = () => {
                             iconName = 'favorite'
                         }
                         // You can return any component that you like here!
-                        return <MaterialIcons name={iconName} size={25} color={color} />;
+                        return <MaterialIcons name={iconName} size={26} color={color} />;
                     },
             })}>
                 <Tab.Screen name="Home" component={HomeScreen} />
