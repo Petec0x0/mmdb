@@ -1,41 +1,52 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList, Dimensions } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { loadAllScreenData } from '../redux/actions';
 import { FeaturedMovie as Featured } from '../components/FeaturedMovie';
 import { FlatListMovieItem as Item } from '../components/FlatListMovieItem';
+import SkeletonComponent from '../components/SkeletonComponent';
 
-const fetchMovies = async () => {
-    const url = 'https://api.themoviedb.org/3/discover/movie?api_key=70744832195ce0e5cdef664f92eba840&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=false&page=2&with_watch_monetization_types=flatrate'
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.results;
-}
+const { width, height } = Dimensions.get("window");
 
 const AllHomeScreen = () => {
+    const statusState = useSelector(state => state.status.allHomeScreen);
+    const stateData = useSelector(state => state.allHomeScreen.data);
+    const dispatch  = useDispatch();
 
-    const [DATA, setDATA] = useState([]);
-    useEffect(async () => {
-        const fetchedData = await fetchMovies();
-        console.log(fetchedData);
-        setDATA([...fetchedData]);
+    useEffect(() => {
+        dispatch(loadAllScreenData());
     }, [])
 
     const renderItem = ({ item }) => (
-        <Item title={item.original_title} poster={item.poster_path} />
+        <Item
+            id={stateData[item].id} 
+            title={stateData[item].original_title} 
+            poster={stateData[item].poster_path} 
+            rating={stateData[item].rating} 
+            liked={stateData[item].liked}
+        />
       );
-
-    return (
-        <View style={styles.container}>
-            <FlatList
-                style={{flex: 1}} 
-                data={DATA}
-                numColumns={2}
-                keyExtractor={(item) => item.id}
-                renderItem={renderItem}
-                ListHeaderComponent={Featured}
-                extraData={DATA}
-            />
-        </View>
-    )
+    
+    if(statusState == 'loaded'){
+        // Get Data if it is ready
+        return (
+            <View style={styles.container}>
+                <FlatList
+                    style={{flex: 1}} 
+                    data={Object.keys(stateData)}
+                    numColumns={2}
+                    keyExtractor={(item) => stateData[item].id}
+                    renderItem={renderItem}
+                    ListHeaderComponent={Featured}
+                    extraData={stateData}
+                />
+            </View>
+        )
+    }else{
+        return  (
+            <SkeletonComponent width={width} height={height} />
+        )
+    }
 }
 
 export default AllHomeScreen
