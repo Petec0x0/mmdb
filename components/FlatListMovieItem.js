@@ -1,13 +1,14 @@
 import React from 'react';
 import { Image, View, Text, TouchableOpacity } from 'react-native';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MaterialIcons  } from '@expo/vector-icons'; 
+import { likeMovie } from '../redux/actions';
 
-export const FlatListMovieItem = ({ id, title, poster, rating, liked }) => {
+export const FlatListMovieItem = ({ id, title, poster, rating, liked, screenName }) => {
     const dispatch = useDispatch();
-    // function for dispatching an action to like a movie
-    const _likeMe = (id) => {
-        return 0
+    // function for dispatching an action to like a movie action
+    const likeMe = () => {
+        dispatch(likeMovie({id: id, screenName: screenName}));
     }
 
     // -----Do the ratings
@@ -36,12 +37,12 @@ export const FlatListMovieItem = ({ id, title, poster, rating, liked }) => {
             />
             <TouchableOpacity 
                 style={{position:"absolute", right: 15, top: 15}} 
-                onPress={_likeMe(id)}
+                onPress={likeMe}
             >
                 <MaterialIcons 
                     name="favorite" 
                     size={28} 
-                    color={liked ? "red" : '#fff'} 
+                    color={liked ? 'red' : '#fff'} 
                 />
             </TouchableOpacity>
             <Text style={{color: "#fff", fontWeight: 'bold', fontSize: 15}}>{title}</Text>

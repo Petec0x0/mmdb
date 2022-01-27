@@ -4,6 +4,7 @@ export const LOAD_MOVIES_SCREEN_DATA = 'LOAD_MOVIES_SCREEN_DATA';
 export const LOAD_TV_SCREEN_DATA = 'LOAD_TV_SCREEN_DATA';
 export const IS_LOADING = 'IS_LOADING';
 export const LOADED = 'LOADED';
+export const MOVIE_LIKED = 'MOVIE_LIKED';
 
 
 // Action Creators
@@ -24,29 +25,38 @@ export const loadAllScreenData = () => async (dispatch, getState) => {
             original_title: object.original_title || object.name,
             poster_path: object.poster_path,
             rating: object.vote_average,
-            liked: (object.id in favourites)
+            liked: (object.id in favourites),
+            media_type: object.media_type
         }}
     });
 
-    dispatch(loaded({screen:'allHomeScreen', data: dataObj}));
-    // console.log(results);
-    
+    dispatch(loaded({screen:'allHomeScreen', data: dataObj}));    
 }
 
-export const loadMoviesScreenData = () => dispatch => {
-
+export const loadMoviesScreenData = () => (dispatch, getState) => {
+    dispatch(loaded({screen:'moviesHomeScreen', data: {}}));
 }
 
 export const loadTvScreenData = () => dispatch => {
 
 }
 
+// An action creator for dispatching that 
+// the screen is currently loading
 export const isloading = (screen) => ({
     type: IS_LOADING,
     payload: screen
 })
 
+// An action cretor for notifying the reducer
+// that the data has loaded completely
 export const loaded = (payload) => ({
     type: LOADED,
     payload: payload
 }) 
+
+// Action cretor for dispatching "Like Movie" action
+export const likeMovie = (payload) => ({
+    type: MOVIE_LIKED,
+    payload: payload
+})

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, FlatList, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadAllScreenData } from '../redux/actions';
@@ -24,6 +24,7 @@ const AllHomeScreen = () => {
             poster={stateData[item].poster_path} 
             rating={stateData[item].rating} 
             liked={stateData[item].liked}
+            screenName="allHomeScreen"
         />
       );
     
