@@ -9,7 +9,17 @@ const { width, height } = Dimensions.get("window");
 
 const MoviesScreen = () => {
     const statusState = useSelector(state => state.status.moviesHomeScreen);
-    const stateData = useSelector(state => state.allHomeScreen.data);
+    const stateData = useSelector(state => {
+        let selected = {};
+        const _data = state.allHomeScreen.data;
+        const _dataKeys =  Object.keys(_data);
+        _dataKeys.map(key => {
+            if(_data[key].media_type == 'movie'){
+                selected[key] = _data[key];
+            }
+        })
+        return selected;
+    });
     const dispatch  = useDispatch();
 
     useEffect(() => {
@@ -23,7 +33,7 @@ const MoviesScreen = () => {
             poster={stateData[item].poster_path} 
             rating={stateData[item].rating} 
             liked={stateData[item].liked}
-            screenName="moviesHomeScreen"
+            screenName="allHomeScreen"
         />
       );
 

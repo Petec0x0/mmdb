@@ -5,7 +5,6 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import AllHomeScreen from './AllHomeScreen';
 import MoviesScreen from './MoviesScreen';
 import TvScreen from './TvScreen';
-import PeopleScreen from './PeopleScreen';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -36,7 +35,6 @@ export default HomeScreen = () => {
             <Tab.Screen name="All" component={AllHomeScreen} />
             <Tab.Screen name="Movies" component={MoviesScreen} />
             <Tab.Screen name="TV" component={TvScreen} />
-            <Tab.Screen name="People" component={PeopleScreen} />
         </Tab.Navigator>
     )
 }
@@ -45,7 +43,7 @@ export default HomeScreen = () => {
 const styles = StyleSheet.create({
     tabBarText: {
         color: '#fff', 
-        paddingHorizontal: 14,
+        paddingHorizontal: 25,
         paddingTop: 3,
         paddingBottom: 3,
         fontSize: 12,

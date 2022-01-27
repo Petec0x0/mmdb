@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MaterialIcons  } from '@expo/vector-icons'; 
 import { likeMovie } from '../redux/actions';
 
-export const FlatListMovieItem = ({ id, title, poster, rating, liked, screenName }) => {
+const FlatListMovieItem = React.memo(({ id, title, poster, rating, liked, screenName }) => {
     const dispatch = useDispatch();
     // function for dispatching an action to like a movie action
     const likeMe = () => {
@@ -68,4 +68,6 @@ export const FlatListMovieItem = ({ id, title, poster, rating, liked, screenName
             </View>
         </View>
     )
-}
+})
+
+export {FlatListMovieItem}

@@ -37,8 +37,8 @@ export const loadMoviesScreenData = () => (dispatch, getState) => {
     dispatch(loaded({screen:'moviesHomeScreen', data: {}}));
 }
 
-export const loadTvScreenData = () => dispatch => {
-
+export const loadTvScreenData = () => (dispatch, getState) => {
+    dispatch(loaded({screen:'tvHomeScreen', data: {}}));
 }
 
 // An action creator for dispatching that 
